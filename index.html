@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhilSA — Texas A&amp;M Philippine Student Association</title>
+<meta name="description" content="Texas A&M's Philippine Student Association — building phamily through culture, dance, sports, and service since 1982.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sun-noise" aria-hidden="true"></div>
+
+<!--Website Header-->
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="placeholderlogo.png" alt="philsa logo" width="30px" height="30px">
+      </span>
+      <span class="brand-word">PhilSA<span class="brand-sub">Texas A&amp;M</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="officers.html">Officers</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Events
+          <svg class="dropdown-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="calendar.html">Calendar</a>
+          <a href="isang-mahal.html">Isang Mahal</a>
+          <a href="goodphil.html">Goodphil</a>
+        </div>
+      </div>
+
+      <a href="#join">Membership</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Pillars
+          <svg class="dropdown-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="phams.html">Phams</a>
+          <a href="philanthropy.html">Philanthropy</a>
+          <a href="fundraising.html">Fundraising</a>
+          <a href="cultural.html">Cultural</a>
+          <a href="modern.html">Modern</a>
+          <a href="sports.html">Sports</a>
+        </div>
+      </div>
+
+      <a href="#contact">Points</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!--Top of Homepage-->
+<main>
+
+  <section class="hero" id="hero">
+    <div class="hero-rays" aria-hidden="true" id="hero-rays"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Est. 1982 &middot; Texas A&amp;M University</p>
+        <h1 class="hero-title">
+          <span>PhilSA</span>
+          <span class="hero-title-alt">Philippine Student Association</span>
+        </h1>
+        <p class="hero-sub">
+          Texas A&amp;M PhilSA is the first Filipino Student Association out of the thirteen FSA universities across Texas and Oklahoma.<br>Being one of the largest Asian organizations at A&amp;M, PhilSA encourages those from all backgrounds to join and take part in learning about Filipino culture!<br>Here, we emphasize community, inclusivity, diversity, and love through sports, culture, dance, competition, and "phamily"!
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#join">Join us!</a>
+          <a class="btn btn-ghost" href="calendar.html">Upcoming events</a>
+          <a class="btn btn-ghost" href="#">Points</a>
+        </div>
+      </div>
+    </div>
+
+  <!--Infinite image marquee-->
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="hero-marquee-track">
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo — cultural team, Isang Mahal</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Goodphil overall 1st place</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - General Meeting</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Sports</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - KAB reveal</figcaption>
+      </figure>
+      <!-- DUPLICATE OF SET FOR INIFINITE LOOP -->
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo — cultural team, Isang Mahal</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Goodphil overall 1st place</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - General Meeting</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Sports</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - KAB reveal</figcaption>
+      </figure>
+      <!-- second duplicate pair, so wide screens never run out of content mid-loop -->
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo — cultural team, Isang Mahal</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Goodphil overall 1st place</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - General Meeting</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Sports</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - KAB reveal</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo — cultural team, Isang Mahal</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Goodphil overall 1st place</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - General Meeting</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - Sports</figcaption>
+      </figure>
+      <figure class="img-ph marquee-item">
+        <figcaption>Photo - KAB reveal</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!--Get Involved Section-->
+<div class="cards-grid" id="get-involved">
+  <h2 class="section-title">Get Involved</h2>
+
+  <!-- Card 1: Cultural -->
+  <div class="card">
+    <div class="card-visual">
+      <img src="cultural.png" alt="Cultural Icon" class="card-image">
+      <h2 class="card-title">Cultural</h2>
+    </div>
+    <div class="card-text text-left">
+      <p class="card-description">
+        Culture is a huge part of PhilSA. Here, we spread Filipino culture through expressions, stories, dance, and performances. If learning about Filipino culture excites you, check out our Cultural Instagram to learn more!
+      </p>
+      <a href="https://www.instagram.com/philsacultural?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D" class="card-link" target="_blank" rel="noopener noreferrer"><button class="card-button">INSTAGRAM</button></a>
+    </div>
+  </div>
+
+  <!-- Card 2: Modern -->
+  <div class="card shadow-row-top">
+    <div class="card-visual">
+      <img src="modern.png" alt="Modern Icon" class="card-image">
+      <h2 class="card-title">Modern</h2>
+    </div>
+    <div class="card-text text-right">
+      <p class="card-description">
+        Love to dance? So do we! PhilSA Modern brings people together through the love of dance. Here, we host workshops and compete! Check out our Modern Instagram to learn more!
+      </p>
+      <a href="https://www.instagram.com/tamumodern/?hl=en" class="card-link" target="_blank" rel="noopener noreferrer"><button class="card-button">INSTAGRAM</button></a>
+    </div>
+  </div>
+
+  <!-- Card 3: Sports -->
+  <div class="card">
+     <div class="card-visual">
+      <img src="sports.png" alt="Sports Icon" class="card-image">
+      <h2 class="card-title">Sports</h2>
+    </div>
+    <div class="card-text text-left">
+      <p class="card-description">
+        PhilSA competes in many sports through intramural and Goodphil games. Love competition? Compete in one of the many sports teams PhilSA has to offer: basketball, volleyball, soccer, football, ultimate frisbee, and a <u>mystery Goodphil sport</u>!
+      </p>
+      <a href="#" class="card-link"><button class="card-button">LATEST VIDEO</button></a>
+    </div>
+  </div>
+
+  <!-- Card 4: Spirit -->
+  <div class="card">
+    <div class="card-visual">
+      <img src="spirit.png" alt="Spirit Icon" class="card-image">
+      <h2 class="card-title">Spirit</h2>
+    </div>
+    <div class="card-text text-right">
+      <p class="card-description">
+        Every year PhilSA competes at Goodphil and with Goodphil comes Spirit! Spirit is our chance to showcase our talent and pride with a PhilSA cheer. Check out our previous <u>first place performance</u> below!
+      </p>
+      <a href="https://youtu.be/HCFbsJOL01Q?si=XSuB3iCAnVJDgfqN" class="card-link" target="_blank" rel="noopener noreferrer"><button class="card-button">LATEST PERFORMANCE</button></a>
+    </div>
+  </div>
+</div>
+
+<!--Membership Section-->
+  <section class="join" id="join">
+    <div class="wrap join-inner">
+      <figure class="img-ph join-media" style="--ar:3/4">
+        <svg class="img-ph-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.4"/><path d="M8 5l1.4-2h5.2L16 5"/></svg>
+        <figcaption>Photo — new member welcome</figcaption>
+      </figure>
+      <div class="join-content">
+        <p class="eyebrow">Membership</p>
+        <h2 class="section-title">How to Join PhilSA</h2>
+        <p class="join-copy">
+          Philsa does not have an application form! All you have to do to become a member and obtain membership privileges is pay dues! Dues are listed below with their respective due dates. Past the due date, you will be unable to receive membership benefits including the ones listed below!
+        </p>
+        <!--Benefits List-->
+        <p class="benefits-dues">BENEFITS</p>
+        <ol>
+          <li>Participate in Goodphil and Isang Mahal performances</li>
+          <li>Participate in Goodphil sports</li>
+          <li>Participate in phams</li>
+        </ol>
+       <!--Dues List-->
+       <p class="benefits-dues">DUES</p> 
+       <ul>
+        <li>Full year: $60 - due by TBA</li>
+        <li>Fall semester (half year): $40 - due by TBA</li>
+       </ul>
+       <p class="dues-desc">Venmo @bankofvansh or pay through Flywire &amp; provide your full name and t-shirt size!</p>
+
+    </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="brand-word footer-brand">PhilSA<span class="brand-sub">Texas A&amp;M</span></span>
+      <p>Philippine Student Association &middot; Texas A&amp;M University &middot; College Station, TX</p>
+    <div class="footer-links">
+      <p>For any questions/concerns, please DM <a href="https://www.instagram.com/tamuphilsa/" target="_blank" rel="noopener noreferrer" style="text-decoration: underline">@tamuphilsa</a> on Instagram!</p>
+    </div>
+  </div>
+</div>
+  <p class="footer-fine">This website was built by '26-'27 Marketing Chair Hannah Le</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
