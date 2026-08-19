@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Points — PhilSA | Texas A&amp;M Philippine Student Association</title>
+<meta name="description" content="Look up your PhilSA points and see what's required to earn membership benefits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="sun-noise" aria-hidden="true"></div>
+
+<!--Website Header-->
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html#top">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="placeholderlogo.png" alt="philsa logo" width="30px" height="30px">
+      </span>
+      <span class="brand-word">PhilSA<span class="brand-sub">Texas A&amp;M</span></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="officers.html">Officers</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Events
+          <svg class="dropdown-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="calendar.html">Calendar</a>
+          <a href="isang-mahal.html">Isang Mahal</a>
+          <a href="goodphil.html">Goodphil</a>
+        </div>
+      </div>
+
+      <a href="index.html#join">Membership</a>
+
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+          Pillars
+          <svg class="dropdown-caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="phams.html">Phams</a>
+          <a href="philanthropy.html">Philanthropy</a>
+          <a href="fundraising.html">Fundraising</a>
+          <a href="cultural.html">Cultural</a>
+          <a href="modern.html">Modern</a>
+          <a href="sports.html">Sports</a>
+        </div>
+      </div>
+
+      <a href="points.html">Points</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!--Points Hero-->
+  <section class="isang-hero" id="hero">
+    <div class="isang-hero-inner wrap">
+      <div>
+        <p class="eyebrow">Membership &middot; Points</p>
+        <h1 class="isang-title">
+          Points
+        </h1>
+        <p class="isang-sub">
+          Look up your current PhilSA points below, and check what's required to unlock each membership
+          benefit throughout the year.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!--Points Search-->
+  <section class="isang-about" id="search" style="background: var(--ivory);">
+    <div class="wrap">
+      <p class="eyebrow">Look yourself up</p>
+      <h2 class="section-title">Search your points</h2>
+
+      <div class="points-search">
+        <input type="text" id="points-search-input" class="points-search-input" placeholder="Search your name..." autocomplete="off">
+        <button type="button" id="points-search-btn" class="btn btn-primary points-search-btn">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!--Point Requirements-->
+  <section class="isang-about" style="background: var(--ivory-dim);">
+    <div class="wrap">
+      <p class="eyebrow">How points work</p>
+      <h2 class="section-title">Point requirements</h2>
+      <p style="color: var(--ink-soft); max-width: 56ch; margin: 0 0 32px;">
+        Points are earned by attending and participating in PhilSA events throughout the semester. Here's
+        what's required to unlock each benefit:
+      </p>
+
+      <div class="points-req-grid">
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">General Meeting</p>
+        </div>
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">Isang Mahal</p>
+        </div>
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">Goodphil</p>
+        </div>
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">Pham Event</p>
+        </div>
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">Fundraiser / Concessions</p>
+        </div>
+
+        <div class="points-req-card">
+          <p class="points-req-value">TBA</p>
+          <p class="points-req-label">Philanthropy Event</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap footer-inner">
+    <div>
+      <span class="brand-word footer-brand">PhilSA<span class="brand-sub">Texas A&amp;M</span></span>
+      <p>Philippine Student Association &middot; Texas A&amp;M University &middot; College Station, TX</p>
+    <div class="footer-links">
+      <p>For any questions/concerns, please DM <a href="https://www.instagram.com/tamuphilsa/" target="_blank" rel="noopener noreferrer" style="text-decoration: underline">@tamuphilsa</a> on Instagram!</p>
+    </div>
+  </div>
+</div>
+  <p class="footer-fine">This website was built by '26-'27 Marketing Chair Hannah Le</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
