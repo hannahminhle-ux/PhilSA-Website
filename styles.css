@@ -1441,6 +1441,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   text-align: center;
 }
 
+.points-search-section .section-title{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .points-search{
   display: flex;
   gap: 12px;
@@ -1521,6 +1526,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   max-width: 56ch;
 }
 
+.points-req-lists .benefits-dues{
+  margin: 0 0 14px;
+}
+
 .points-req-lists ul{
   list-style: none;
   margin: 0;
@@ -1560,5 +1569,5 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 680px){
   .points-search{ flex-direction: column; }
-  .points-req-lists{ grid-template-columns: 1fr; gap: 0; }
+  .points-req-lists{ grid-template-columns: 1fr; gap: 32px 0; }
 }
