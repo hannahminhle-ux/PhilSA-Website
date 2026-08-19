@@ -1442,6 +1442,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .points-search-section .section-title{
+  width: fit-content;
   margin-left: auto;
   margin-right: auto;
 }
