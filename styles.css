@@ -1397,6 +1397,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .venue-grid{ grid-template-columns: 1fr; }
 }
 
+/* ---------------- Calendar page ---------------- */
+#calendar iframe{
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border: 0;
+}
+
 /* ---------------- Missing rules for renamed/edited pages ---------------- */
 .hero-copy{
   display: flex;
