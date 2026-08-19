@@ -505,6 +505,42 @@ a{ color: inherit; }
   margin: 56px auto;
  }
 
+/* ---------------- Hero image marquee ---------------- */
+.hero-marquee{
+  width: auto;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: 48px;
+  overflow: hidden;
+}
+
+.hero-marquee-track{
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: marquee-scroll-right 32s linear infinite;
+}
+
+.marquee-item{
+  flex: 0 0 auto;
+  width: 220px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.marquee-item--large{
+  width: 340px;
+}
+
+@keyframes marquee-scroll-right{
+  from{ transform: translateX(-50%); }
+  to{ transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hero-marquee-track{ animation: none; }
+}
+
  /*Image slideshow*/
  .slideshow-wrap {
   display: flex;
@@ -1391,6 +1427,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   align-items: center;
   justify-content: center;
 }
+
+/* ---------------- Calendar page ---------------- */
+#calendar iframe{
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border: 0;
+}
+
 /* ---------------- Points page ---------------- */
 .points-search{
   display: flex;
@@ -1419,6 +1464,41 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .points-search-btn{
   padding: 12px 24px;
   white-space: nowrap;
+}
+
+.points-table-wrap{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--ivory);
+}
+
+.points-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.points-table th{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  text-align: left;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--ivory-dim);
+}
+
+.points-table td{
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.96rem;
+}
+
+.points-table tr:last-child td{
+  border-bottom: none;
 }
 
 .points-empty{
