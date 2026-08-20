@@ -1524,11 +1524,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(200px, 300px);
   gap: 56px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .points-req-img{
   margin: 0;
+  aspect-ratio: auto;
+  height: 100%;
 }
 
 .points-req-groups{
@@ -1591,8 +1593,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 @media (max-width: 900px){
-  .points-req-inner{ grid-template-columns: 1fr; }
-  .points-req-img{ order: -1; max-width: 320px; margin: 0 auto; }
+  .points-req-inner{ grid-template-columns: 1fr; align-items: stretch; }
+  .points-req-img{ order: -1; max-width: 320px; margin: 0 auto; aspect-ratio: 4/3; height: auto; }
   .points-req-groups{ grid-template-columns: 1fr; gap: 40px; }
   .points-req-group{ padding: 0; }
   .points-req-group--split{ border-left: none; border-top: 1px solid var(--line); padding-top: 40px; }
