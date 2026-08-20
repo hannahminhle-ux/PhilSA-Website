@@ -161,81 +161,90 @@ document.addEventListener('click', (e) => {
   });
 });
 // ---------------- Firebase Points Live Search ----------------
-const firebaseConfig = {
-  databaseURL: "https://philsa-30a66-default-rtdb.firebaseio.com"
-};
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if Firebase SDKs loaded
+  if (typeof firebase === 'undefined') {
+    console.error("Firebase SDK script tags are missing from HTML!");
+    return;
+  }
 
-if (typeof firebase !== 'undefined') {
-  firebase.initializeApp(firebaseConfig);
+  // Your Firebase Database Address
+  const firebaseConfig = {
+    databaseURL: "https://philsa-30a66-default-rtdb.firebaseio.com"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  
   const database = firebase.database();
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const searchBtn = document.getElementById("points-search-btn");
-    const searchInput = document.getElementById("points-search-input");
-    const resultsDiv = document.getElementById("search-results");
+  const searchBtn = document.getElementById("points-search-btn");
+  const searchInput = document.getElementById("points-search-input");
+  const resultsDiv = document.getElementById("search-results");
 
-    if (searchBtn && searchInput && resultsDiv) {
-      searchBtn.addEventListener("click", performSearch);
-      searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          performSearch();
-        }
-      });
-    }
+  if (!searchBtn || !searchInput || !resultsDiv) {
+    return;
+  }
 
-    function performSearch() {
-      const rawInput = searchInput.value.trim();
-
-      if (!rawInput) {
-        resultsDiv.innerHTML = "<p style='color: var(--ink-soft);'>Please enter a name to search.</p>";
-        return;
-      }
-
-      // Strips spaces/punctuation so "Last, First" matches "firstlast" key in Firebase
-      const cleanedQuery = rawInput.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-      resultsDiv.innerHTML = "<p>Searching points database...</p>";
-
-      database.ref('FALL2026').once('value')
-        .then((snapshot) => {
-          const treeData = snapshot.val();
-
-          if (!treeData) {
-            resultsDiv.innerHTML = "<p>No points records found for Fall 2026.</p>";
-            return;
-          }
-
-          const memberKeys = Object.keys(treeData);
-          
-          // Matches cleaned input against cleaned Firebase key
-          const matchedKey = memberKeys.find(nameKey => {
-            const cleanKey = nameKey.toLowerCase().replace(/[^a-z0-9]/g, '');
-            return cleanKey.includes(cleanedQuery) || cleanedQuery.includes(cleanKey);
-          });
-
-          if (matchedKey) {
-            const memberData = treeData[matchedKey];
-
-            resultsDiv.innerHTML = `
-              <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--ivory-dim); max-width: 480px; margin: 0 auto; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                <h3 style="margin-top: 0; color: var(--ink); border-bottom: 2px solid var(--ivory-dim); padding-bottom: 8px; text-transform: capitalize;">${rawInput}</h3>
-                <p style="font-size: 1.1rem; font-weight: 600;">Total Points: <span style="color: var(--primary, #d9534f);">${memberData.totalPoints || 0}</span></p>
-                <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 12px;"><strong>Dues Paid:</strong> ${memberData.duesPaid || 'No'}</p>
-                <hr style="border: none; border-top: 1px solid var(--ivory-dim); margin: 12px 0;">
-                <p><strong>Cultural:</strong> ${memberData.culturalPoints || 0} &nbsp;|&nbsp; <strong>Modern:</strong> ${memberData.modernPoints || 0}</p>
-                <p><strong>General:</strong> ${memberData.generalPoints || 0} &nbsp;|&nbsp; <strong>Sports:</strong> ${memberData.sportsPoints || 0}</p>
-                <p><strong>Philanthropy:</strong> ${memberData.philanthropyPoints || 0} &nbsp;|&nbsp; <strong>Fundraising:</strong> ${memberData.fundraisingPoints || 0}</p>
-              </div>
-            `;
-          } else {
-            resultsDiv.innerHTML = `<p style="color: #d9534f;">No member found matching "${rawInput}". Please check spelling and try again.</p>`;
-          }
-        })
-        .catch((error) => {
-          console.error("Firebase Fetch Error:", error);
-          resultsDiv.innerHTML = "<p style='color: #d9534f;'>Error connecting to points database.</p>";
-        });
+  searchBtn.addEventListener("click", performSearch);
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      performSearch();
     }
   });
-}
+
+  function performSearch() {
+    const rawInput = searchInput.value.trim();
+
+    if (!rawInput) {
+      resultsDiv.innerHTML = "<p style='color: var(--ink-soft);'>Please enter a name to search.</p>";
+      return;
+    }
+
+    // Strips spaces and special characters so "Aggie, Test" matches "testaggie"
+    const cleanedQuery = rawInput.toLowerCase().replace(/[^a-z0-9]/g, '');
+    resultsDiv.innerHTML = "<p>Searching points database...</p>";
+
+    database.ref('FALL2026').once('value')
+      .then((snapshot) => {
+        const treeData = snapshot.val();
+
+        if (!treeData) {
+          resultsDiv.innerHTML = "<p>No points records found for Fall 2026.</p>";
+          return;
+        }
+
+        const memberKeys = Object.keys(treeData);
+        
+        // Match user input against lowercased keys in Firebase
+        const matchedKey = memberKeys.find(nameKey => {
+          const cleanKey = nameKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+          return cleanKey.includes(cleanedQuery) || cleanedQuery.includes(cleanKey);
+        });
+
+        if (matchedKey) {
+          const memberData = treeData[matchedKey];
+
+          resultsDiv.innerHTML = `
+            <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--ivory-dim); max-width: 480px; margin: 20px auto 0; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+              <h3 style="margin-top: 0; color: var(--ink); border-bottom: 2px solid var(--ivory-dim); padding-bottom: 8px; text-transform: capitalize;">${rawInput}</h3>
+              <p style="font-size: 1.1rem; font-weight: 600;">Total Points: <span style="color: var(--primary, #d9534f);">${memberData.totalPoints || 0}</span></p>
+              <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 12px;"><strong>Dues Paid:</strong> ${memberData.duesPaid || 'No'}</p>
+              <hr style="border: none; border-top: 1px solid var(--ivory-dim); margin: 12px 0;">
+              <p><strong>Cultural:</strong> ${memberData.culturalPoints || 0} &nbsp;|&nbsp; <strong>Modern:</strong> ${memberData.modernPoints || 0}</p>
+              <p><strong>General:</strong> ${memberData.generalPoints || 0} &nbsp;|&nbsp; <strong>Sports:</strong> ${memberData.sportsPoints || 0}</p>
+              <p><strong>Philanthropy:</strong> ${memberData.philanthropyPoints || 0} &nbsp;|&nbsp; <strong>Fundraising:</strong> ${memberData.fundraisingPoints || 0}</p>
+            </div>
+          `;
+        } else {
+          resultsDiv.innerHTML = `<p style="color: #d9534f;">No member found matching "${rawInput}". Please check spelling and try again.</p>`;
+        }
+      })
+      .catch((error) => {
+        console.error("Firebase Fetch Error:", error);
+        resultsDiv.innerHTML = "<p style='color: #d9534f;'>Error connecting to points database.</p>";
+      });
+  }
+});
