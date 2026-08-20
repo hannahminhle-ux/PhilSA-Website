@@ -177,21 +177,26 @@ if (typeof firebase !== 'undefined') {
     if (searchBtn && searchInput && resultsDiv) {
       searchBtn.addEventListener("click", performSearch);
       searchInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") performSearch();
+        if (e.key === "Enter") {
+          e.preventDefault();
+          performSearch();
+        }
       });
     }
 
     function performSearch() {
-      const query = searchInput.value.trim().toLowerCase();
+      const rawInput = searchInput.value.trim();
 
-      if (!query) {
+      if (!rawInput) {
         resultsDiv.innerHTML = "<p style='color: var(--ink-soft);'>Please enter a name to search.</p>";
         return;
       }
 
+      // Strips spaces/punctuation so "Last, First" matches "firstlast" key in Firebase
+      const cleanedQuery = rawInput.toLowerCase().replace(/[^a-z0-9]/g, '');
+
       resultsDiv.innerHTML = "<p>Searching points database...</p>";
 
-      // Queries the 'FALL2026' node created by your Apps Script
       database.ref('FALL2026').once('value')
         .then((snapshot) => {
           const treeData = snapshot.val();
@@ -203,26 +208,28 @@ if (typeof firebase !== 'undefined') {
 
           const memberKeys = Object.keys(treeData);
           
-          // Case-insensitive lookup against tree keys
-          const matchedKey = memberKeys.find(nameKey => 
-            nameKey.toLowerCase().includes(query)
-          );
+          // Matches cleaned input against cleaned Firebase key
+          const matchedKey = memberKeys.find(nameKey => {
+            const cleanKey = nameKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+            return cleanKey.includes(cleanedQuery) || cleanedQuery.includes(cleanKey);
+          });
 
           if (matchedKey) {
             const memberData = treeData[matchedKey];
 
             resultsDiv.innerHTML = `
               <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--ivory-dim); max-width: 480px; margin: 0 auto; text-align: left; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                <h3 style="margin-top: 0; color: var(--ink); border-bottom: 2px solid var(--ivory-dim); padding-bottom: 8px;">${matchedKey}</h3>
-                <p style="font-size: 1.1rem; font-weight: 600;">Total Points: <span style="color: var(--primary, #d9534f);">${memberData.Total || 0}</span></p>
+                <h3 style="margin-top: 0; color: var(--ink); border-bottom: 2px solid var(--ivory-dim); padding-bottom: 8px; text-transform: capitalize;">${rawInput}</h3>
+                <p style="font-size: 1.1rem; font-weight: 600;">Total Points: <span style="color: var(--primary, #d9534f);">${memberData.totalPoints || 0}</span></p>
+                <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 12px;"><strong>Dues Paid:</strong> ${memberData.duesPaid || 'No'}</p>
                 <hr style="border: none; border-top: 1px solid var(--ivory-dim); margin: 12px 0;">
-                <p><strong>Cultural:</strong> ${memberData.Cult || 0} &nbsp;|&nbsp; <strong>Modern:</strong> ${memberData.Mod || 0}</p>
-                <p><strong>General:</strong> ${memberData.Gen || 0} &nbsp;|&nbsp; <strong>Sports:</strong> ${memberData.Spo || 0}</p>
-                <p><strong>Philanthropy:</strong> ${memberData.Phil || 0} &nbsp;|&nbsp; <strong>Fundraising:</strong> ${memberData.Fund || 0}</p>
+                <p><strong>Cultural:</strong> ${memberData.culturalPoints || 0} &nbsp;|&nbsp; <strong>Modern:</strong> ${memberData.modernPoints || 0}</p>
+                <p><strong>General:</strong> ${memberData.generalPoints || 0} &nbsp;|&nbsp; <strong>Sports:</strong> ${memberData.sportsPoints || 0}</p>
+                <p><strong>Philanthropy:</strong> ${memberData.philanthropyPoints || 0} &nbsp;|&nbsp; <strong>Fundraising:</strong> ${memberData.fundraisingPoints || 0}</p>
               </div>
             `;
           } else {
-            resultsDiv.innerHTML = `<p style="color: #d9534f;">No member found matching "${searchInput.value}". Please check your spelling (e.g., "Lastname, Firstname").</p>`;
+            resultsDiv.innerHTML = `<p style="color: #d9534f;">No member found matching "${rawInput}". Please check spelling and try again.</p>`;
           }
         })
         .catch((error) => {
