@@ -1520,11 +1520,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   text-align: center;
 }
 
+.points-req-inner{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 300px);
+  gap: 56px;
+  align-items: start;
+}
+
+.points-req-img{
+  margin: 0;
+}
+
 .points-req-groups{
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   gap: 0;
-  max-width: 900px;
 }
 
 .points-req-group{
@@ -1581,6 +1591,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 @media (max-width: 900px){
+  .points-req-inner{ grid-template-columns: 1fr; }
+  .points-req-img{ order: -1; max-width: 320px; margin: 0 auto; }
   .points-req-groups{ grid-template-columns: 1fr; gap: 40px; }
   .points-req-group{ padding: 0; }
   .points-req-group--split{ border-left: none; border-top: 1px solid var(--line); padding-top: 40px; }
