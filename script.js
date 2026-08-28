@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     firebase.initializeApp(firebaseConfig);
   }
   const database = firebase.database();
-  const SHEET_NAME = 'SPRING2026';
+  const SHEET_NAME = 'FALL2026';
 
   function checkQualifications(userInfo) {
     const { duesPaid, totalPoints, culturalPoints, philanthropyPoints, fundraisingPoints } = userInfo;
