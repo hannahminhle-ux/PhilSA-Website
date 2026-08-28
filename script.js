@@ -256,3 +256,111 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('points-search-input');
+  const searchBtn = document.getElementById('points-search-btn');
+  const resultsDiv = document.getElementById('search-results');
+
+  if (!searchBtn || !searchInput || !resultsDiv) return; // not on points.html
+
+  // Replace with your actual config (same values used in firebaseConfig.js)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDtBrMENtxSCtnQ5WV1an0cZ4_bNpzNc0s",
+    authDomain: "https://www.gstatic.com/firebasejs/8.10.1/firebase-app-compat.js",
+    databaseURL: "https://console.firebase.google.com/u/0/project/philsa-30a66/overview",
+    projectId: "philsa-30a66",
+    storageBucket: "philsa-30a66.appspot.com",
+    messagingSenderId: "716320849415",
+    appId: "1:716320849415:web:e65af3996da7005075f4a2"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const database = firebase.database();
+  const SHEET_NAME = 'SPRING2026';
+
+  function checkQualifications(userInfo) {
+    const { duesPaid, totalPoints, culturalPoints, philanthropyPoints, fundraisingPoints } = userInfo;
+
+    if (duesPaid === 'No') {
+      return { isangMahalQualified: 'Pay Dues', goodPhilQualified: 'Pay Dues' };
+    }
+
+    const isangMahalQualified =
+      (totalPoints >= 24 && culturalPoints >= 6 && philanthropyPoints >= 3 && fundraisingPoints >= 2)
+        ? 'Qualified' : 'Not Qualified';
+
+    let goodPhilQualified = 'Not Qualified';
+    if (duesPaid === 'Full Year' &&
+        totalPoints >= 80 && culturalPoints >= 20 && philanthropyPoints >= 10 && fundraisingPoints >= 10) {
+      goodPhilQualified = 'Qualified';
+    }
+    if (duesPaid === 'Spring Semester' &&
+        totalPoints >= 60 && culturalPoints >= 10 && philanthropyPoints >= 5 && fundraisingPoints >= 5) {
+      goodPhilQualified = 'Qualified';
+    }
+
+    return { isangMahalQualified, goodPhilQualified };
+  }
+
+  function renderResults(name, userInfo) {
+    if (!userInfo) {
+      resultsDiv.innerHTML = `<p class="points-alert">Member not found.</p>`;
+      return;
+    }
+
+    const q = checkQualifications(userInfo);
+    const duesLabel = userInfo.duesPaid === 'No'
+      ? 'Not Paid'
+      : userInfo.duesPaid === 'Spring Semester' ? 'Spring' : 'Full Year';
+
+    resultsDiv.innerHTML = `
+      <div class="points-card">
+        <h3 class="points-card-title">${name}</h3>
+        <p class="points-dues">Dues: <em>${duesLabel}</em></p>
+        <div class="points-stats">
+          <div class="points-stat"><span>Total</span><strong>${userInfo.totalPoints}</strong></div>
+          <div class="points-stat"><span>Cultural</span><strong>${userInfo.culturalPoints}</strong></div>
+          <div class="points-stat"><span>Modern</span><strong>${userInfo.modernPoints}</strong></div>
+          <div class="points-stat"><span>Sports</span><strong>${userInfo.sportsPoints}</strong></div>
+          <div class="points-stat"><span>Philanthropy</span><strong>${userInfo.philanthropyPoints}</strong></div>
+          <div class="points-stat"><span>Fundraising</span><strong>${userInfo.fundraisingPoints}</strong></div>
+        </div>
+        <div class="points-qual-row">
+          <div class="points-qual ${q.isangMahalQualified === 'Qualified' ? 'is-qualified' : ''}">
+            <span>Isang Mahal</span><strong>${q.isangMahalQualified}</strong>
+          </div>
+          <div class="points-qual ${q.goodPhilQualified === 'Qualified' ? 'is-qualified' : ''}">
+            <span>Goodphil</span><strong>${q.goodPhilQualified}</strong>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async function handleSearch() {
+    const rawName = searchInput.value.trim();
+    if (!rawName) {
+      resultsDiv.innerHTML = `<p class="points-alert">Please enter your name.</p>`;
+      return;
+    }
+
+    const formattedName = rawName.replace(/\s/g, '').toLowerCase();
+    resultsDiv.innerHTML = `<p class="points-loading">Searching…</p>`;
+
+    try {
+      const snapshot = await database.ref(`${SHEET_NAME}/${formattedName}`).once('value');
+      renderResults(rawName, snapshot.exists() ? snapshot.val() : null);
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      resultsDiv.innerHTML = `<p class="points-alert">Error fetching your information.</p>`;
+    }
+  }
+
+  searchBtn.addEventListener('click', handleSearch);
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSearch();
+  });
+});
