@@ -168,27 +168,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!searchBtn || !searchInput || !resultsDiv) return;
 
+  // 1. Initialize Firebase App
+  const firebaseConfig = {
+    apiKey: "AIzaSyDtBrMENtxSCtnQ5WV1an0cZ4_bNpzNc0s",
+    authDomain: "philsa-30a66.firebaseapp.com",
+    databaseURL: "https://philsa-30a66-default-rtdb.firebaseio.com",
+    projectId: "philsa-30a66",
+    storageBucket: "philsa-30a66.appspot.com",
+    messagingSenderId: "716320849415",
+    appId: "1:716320849415:web:e65af3996da7005075f4a2",
+    measurementId: "G-4PGYLF4BYV"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const database = firebase.database();
-  const SHEET_NAME = 'FALL2026';
 
   function checkQualifications(userInfo) {
     const { duesPaid, totalPoints, culturalPoints, philanthropyPoints, fundraisingPoints } = userInfo;
-
-    if (duesPaid === 'No') {
+    if (duesPaid === 'No' || !duesPaid) {
       return { isangMahalQualified: 'Pay Dues', goodPhilQualified: 'Pay Dues' };
     }
 
-    const isangMahalQualified =
-      (totalPoints >= 24 && culturalPoints >= 6 && philanthropyPoints >= 3 && fundraisingPoints >= 2)
-        ? 'Qualified' : 'Not Qualified';
+    const tPoints = Number(totalPoints) || 0;
+    const cPoints = Number(culturalPoints) || 0;
+    const pPoints = Number(philanthropyPoints) || 0;
+    const fPoints = Number(fundraisingPoints) || 0;
+
+    const isangMahalQualified = (tPoints >= 24 && cPoints >= 6 && pPoints >= 3 && fPoints >= 2) ? 'Qualified' : 'Not Qualified';
 
     let goodPhilQualified = 'Not Qualified';
-    if (duesPaid === 'Full Year' &&
-        totalPoints >= 80 && culturalPoints >= 20 && philanthropyPoints >= 10 && fundraisingPoints >= 10) {
+    if (duesPaid === 'Full Year' && tPoints >= 80 && cPoints >= 20 && pPoints >= 10 && fPoints >= 10) {
       goodPhilQualified = 'Qualified';
     }
-    if ((duesPaid === 'Spring Semester' || duesPaid === 'Half Year') &&
-        totalPoints >= 60 && culturalPoints >= 10 && philanthropyPoints >= 5 && fundraisingPoints >= 5) {
+    if ((duesPaid === 'Spring Semester' || duesPaid === 'Half Year') && tPoints >= 60 && cPoints >= 10 && pPoints >= 5 && fPoints >= 5) {
       goodPhilQualified = 'Qualified';
     }
 
@@ -202,13 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const q = checkQualifications(userInfo);
-    const duesLabel = userInfo.duesPaid === 'No'
-      ? 'Not Paid'
-      : userInfo.duesPaid === 'Spring Semester' ? 'Spring' : 'Full Year';
+    const duesLabel = userInfo.duesPaid === 'No' ? 'Not Paid' : (userInfo.duesPaid || 'N/A');
 
     resultsDiv.innerHTML = `
       <div class="points-card">
-        <h3 class="points-card-title">${name}</h3>
+        <h3 class="points-card-title">${userInfo.name || name}</h3>
         <p class="points-dues">Dues: <em>${duesLabel}</em></p>
         <div class="points-stats">
           <div class="points-stat"><span>Total</span><strong>${userInfo.totalPoints || 0}</strong></div>
@@ -237,12 +249,39 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const formattedName = rawName.replace(/\s/g, '').toLowerCase();
+    const searchTarget = rawName.toLowerCase();
+    const formattedKey = rawName.replace(/\s/g, '').toLowerCase();
     resultsDiv.innerHTML = `<p class="points-loading">Searching…</p>`;
 
     try {
-      const snapshot = await database.ref(`${SHEET_NAME}/${formattedName}`).once('value');
-      renderResults(rawName, snapshot.exists() ? snapshot.val() : null);
+      // 1. Try direct exact match key lookup (e.g., FALL2026/johnsmith)
+      let snapshot = await database.ref(`FALL2026/${formattedKey}`).once('value');
+
+      if (snapshot.exists()) {
+        renderResults(rawName, snapshot.val());
+        return;
+      }
+
+      // 2. Fallback: Search across all nodes in FALL2026 (case-insensitive partial search)
+      const rootSnapshot = await database.ref('FALL2026').once('value');
+      if (rootSnapshot.exists()) {
+        let matchedData = null;
+        rootSnapshot.forEach((childSnapshot) => {
+          const val = childSnapshot.val();
+          const memberName = (val.name || childSnapshot.key || "").toLowerCase();
+          if (memberName.includes(searchTarget) || searchTarget.includes(memberName)) {
+            matchedData = val;
+          }
+        });
+
+        if (matchedData) {
+          renderResults(rawName, matchedData);
+          return;
+        }
+      }
+
+      // If no records match
+      renderResults(rawName, null);
     } catch (err) {
       console.error('Error fetching user:', err);
       resultsDiv.innerHTML = `<p class="points-alert">Error fetching your information.</p>`;
