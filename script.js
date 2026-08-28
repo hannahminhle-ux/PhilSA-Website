@@ -185,16 +185,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const database = firebase.database();
 
-  function checkQualifications(userInfo) {
-    const { duesPaid, totalPoints, culturalPoints, philanthropyPoints, fundraisingPoints } = userInfo;
-    if (duesPaid === 'No' || !duesPaid) {
-      return { isangMahalQualified: 'Pay Dues', goodPhilQualified: 'Pay Dues' };
-    }
+function checkQualifications(userInfo) {
+  const { duesPaid, total, cultural, philanthropy, fundraising } = userInfo;
+  if (duesPaid === 'No' || !duesPaid) {
+    return { isangMahalQualified: 'Pay Dues', goodPhilQualified: 'Pay Dues' };
+  }
 
-    const tPoints = Number(totalPoints) || 0;
-    const cPoints = Number(culturalPoints) || 0;
-    const pPoints = Number(philanthropyPoints) || 0;
-    const fPoints = Number(fundraisingPoints) || 0;
+  const tPoints = Number(total) || 0;
+  const cPoints = Number(cultural) || 0;
+  const pPoints = Number(philanthropy) || 0;
+  const fPoints = Number(fundraising) || 0;
 
     const isangMahalQualified = (tPoints >= 24 && cPoints >= 6 && pPoints >= 3 && fPoints >= 2) ? 'Qualified' : 'Not Qualified';
 
@@ -222,14 +222,14 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="points-card">
         <h3 class="points-card-title">${userInfo.name || name}</h3>
         <p class="points-dues">Dues: <em>${duesLabel}</em></p>
-        <div class="points-stats">
-          <div class="points-stat"><span>Total</span><strong>${userInfo.totalPoints || 0}</strong></div>
-          <div class="points-stat"><span>Cultural</span><strong>${userInfo.culturalPoints || 0}</strong></div>
-          <div class="points-stat"><span>Modern</span><strong>${userInfo.modernPoints || 0}</strong></div>
-          <div class="points-stat"><span>Sports</span><strong>${userInfo.sportsPoints || 0}</strong></div>
-          <div class="points-stat"><span>Philanthropy</span><strong>${userInfo.philanthropyPoints || 0}</strong></div>
-          <div class="points-stat"><span>Fundraising</span><strong>${userInfo.fundraisingPoints || 0}</strong></div>
-        </div>
+<div class="points-stats">
+  <div class="points-stat"><span>Total</span><strong>${userInfo.total || 0}</strong></div>
+  <div class="points-stat"><span>Cultural</span><strong>${userInfo.cultural || 0}</strong></div>
+  <div class="points-stat"><span>Modern</span><strong>${userInfo.modern || 0}</strong></div>
+  <div class="points-stat"><span>Sports</span><strong>${userInfo.sports || 0}</strong></div>
+  <div class="points-stat"><span>Philanthropy</span><strong>${userInfo.philanthropy || 0}</strong></div>
+  <div class="points-stat"><span>Fundraising</span><strong>${userInfo.fundraising || 0}</strong></div>
+</div>
         <div class="points-qual-row">
           <div class="points-qual ${q.isangMahalQualified === 'Qualified' ? 'is-qualified' : ''}">
             <span>Isang Mahal</span><strong>${q.isangMahalQualified}</strong>
