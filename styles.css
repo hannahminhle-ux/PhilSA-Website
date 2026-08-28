@@ -1539,17 +1539,50 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 6px;
   min-width: 80px;
+}
+
+.points-stat span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.points-stat strong {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  color: var(--ink);
 }
 
 .points-qual-row { display: flex; gap: 16px; margin-top: 16px; }
 
 .points-qual {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   text-align: center;
-  padding: 12px;
+  padding: 16px 12px;
   border-radius: 8px;
   background: #f2d3ce;
+}
+
+.points-qual span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.points-qual strong {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  color: var(--maroon-deep);
 }
 
 .points-qual.is-qualified { background: #cfead0; }
