@@ -1526,13 +1526,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   padding: 24px;
   max-width: 640px;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
 }
+
 .points-alert { color: #b3261e; }
 .points-loading { color: var(--ink-soft); }
 .points-stats {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   margin: 16px 0;
 }
@@ -1559,7 +1561,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   color: var(--ink);
 }
 
-.points-qual-row { display: flex; gap: 16px; margin-top: 16px; }
+.points-qual-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
 
 .points-qual {
   flex: 1;
