@@ -161,123 +161,13 @@ document.addEventListener('click', (e) => {
   });
 });
 // ---------------- Firebase Points Live Search ----------------
-document.addEventListener("DOMContentLoaded", () => {
-  // Your Firebase Database Address
-  const firebaseConfig = {
-    databaseURL: "https://philsa-30a66-default-rtdb.firebaseio.com"
-  };
-
-  if (typeof firebase !== 'undefined' && !firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-
-  const searchBtn = document.getElementById("points-search-btn");
-  const searchInput = document.getElementById("points-search-input");
-  const resultsDiv = document.getElementById("search-results");
-
-  if (!searchBtn || !searchInput || !resultsDiv) return;
-
-  function performSearch() {
-    if (typeof firebase === 'undefined') {
-      resultsDiv.innerHTML = '<p style="color: #d9534f;">Firebase SDK failed to load. Please check your connection.</p>';
-      return;
-    }
-
-    const rawInput = searchInput.value.trim();
-    if (!rawInput) {
-      resultsDiv.innerHTML = '<p style="color: var(--ink-soft);">Please enter a name to search.</p>';
-      return;
-    }
-
-    const cleanedQuery = rawInput.toLowerCase().replace(/[^a-z0-9]/g, '');
-    resultsDiv.innerHTML = '<p>Searching points database...</p>';
-
-    const database = firebase.database();
-
-    // Query root to safely support 'FALL2026', 'FALL2025', 'members', or root keys
-    database.ref().once('value')
-      .then((snapshot) => {
-        const treeData = snapshot.val();
-        resultsDiv.innerHTML = '';
-
-        if (!treeData) {
-          resultsDiv.innerHTML = '<p>No database records found.</p>';
-          return;
-        }
-
-        // Auto-detect node structure
-        const membersData = treeData.FALL2026 || treeData.FALL2025 || treeData.members || treeData;
-        const memberKeys = Object.keys(membersData);
-
-        const matchedKey = memberKeys.find(nameKey => {
-          const cleanKey = nameKey.toLowerCase().replace(/[^a-z0-9]/g, '');
-          return cleanKey.includes(cleanedQuery) || cleanedQuery.includes(cleanKey);
-        });
-
-        if (!matchedKey) {
-          resultsDiv.innerHTML = `<p style="color: #d9534f;">No member found matching "${rawInput}". Please check spelling and try again.</p>`;
-          return;
-        }
-
-        const memberData = membersData[matchedKey];
-
-        resultsDiv.innerHTML = `
-          <div style="background: #fff; padding: 24px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-            <h3 style="margin-top:0; font-size: 1.25rem; color: var(--ink);">${matchedKey}</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 16px;">
-              <div><strong>Cultural:</strong> ${memberData.culturalPoints || 0}</div>
-              <div><strong>Modern:</strong> ${memberData.modernPoints || 0}</div>
-              <div><strong>General:</strong> ${memberData.generalPoints || 0}</div>
-              <div><strong>Sports:</strong> ${memberData.sportsPoints || 0}</div>
-              <div><strong>Philanthropy:</strong> ${memberData.philanthropyPoints || 0}</div>
-              <div><strong>Fundraising:</strong> ${memberData.fundraisingPoints || 0}</div>
-            </div>
-            <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
-            <div style="font-size: 1.1rem; color: var(--ink);">
-              <strong>Total Points: ${memberData.totalPoints || 0}</strong>
-            </div>
-          </div>
-        `;
-      })
-      .catch((error) => {
-        console.error("Firebase Search Error:", error);
-        resultsDiv.innerHTML = '<p style="color: #d9534f;">Error querying database. Check console for details.</p>';
-      });
-  }
-
-  searchBtn.addEventListener("click", performSearch);
-  searchInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      performSearch();
-    }
-  });
-});
-      });
-  }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('points-search-input');
   const searchBtn = document.getElementById('points-search-btn');
   const resultsDiv = document.getElementById('search-results');
 
-  if (!searchBtn || !searchInput || !resultsDiv) return; // not on points.html
+  if (!searchBtn || !searchInput || !resultsDiv) return;
 
-  // Replace with your actual config (same values used in firebaseConfig.js)
-  const firebaseConfig = {
-    apiKey: "AIzaSyDtBrMENtxSCtnQ5WV1an0cZ4_bNpzNc0s",
-    authDomain: "https://www.gstatic.com/firebasejs/8.10.1/firebase-app-compat.js",
-    databaseURL: "https://console.firebase.google.com/u/0/project/philsa-30a66/overview",
-    projectId: "philsa-30a66",
-    storageBucket: "philsa-30a66.appspot.com",
-    messagingSenderId: "716320849415",
-    appId: "1:716320849415:web:e65af3996da7005075f4a2"
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
   const database = firebase.database();
   const SHEET_NAME = 'FALL2026';
 
@@ -297,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalPoints >= 80 && culturalPoints >= 20 && philanthropyPoints >= 10 && fundraisingPoints >= 10) {
       goodPhilQualified = 'Qualified';
     }
-    if (duesPaid === 'Spring Semester' &&
+    if ((duesPaid === 'Spring Semester' || duesPaid === 'Half Year') &&
         totalPoints >= 60 && culturalPoints >= 10 && philanthropyPoints >= 5 && fundraisingPoints >= 5) {
       goodPhilQualified = 'Qualified';
     }
@@ -307,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderResults(name, userInfo) {
     if (!userInfo) {
-      resultsDiv.innerHTML = `<p class="points-alert">Member not found.</p>`;
+      resultsDiv.innerHTML = `<p class="points-alert">Member not found. Check spelling or view full points sheet below.</p>`;
       return;
     }
 
@@ -321,12 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <h3 class="points-card-title">${name}</h3>
         <p class="points-dues">Dues: <em>${duesLabel}</em></p>
         <div class="points-stats">
-          <div class="points-stat"><span>Total</span><strong>${userInfo.totalPoints}</strong></div>
-          <div class="points-stat"><span>Cultural</span><strong>${userInfo.culturalPoints}</strong></div>
-          <div class="points-stat"><span>Modern</span><strong>${userInfo.modernPoints}</strong></div>
-          <div class="points-stat"><span>Sports</span><strong>${userInfo.sportsPoints}</strong></div>
-          <div class="points-stat"><span>Philanthropy</span><strong>${userInfo.philanthropyPoints}</strong></div>
-          <div class="points-stat"><span>Fundraising</span><strong>${userInfo.fundraisingPoints}</strong></div>
+          <div class="points-stat"><span>Total</span><strong>${userInfo.totalPoints || 0}</strong></div>
+          <div class="points-stat"><span>Cultural</span><strong>${userInfo.culturalPoints || 0}</strong></div>
+          <div class="points-stat"><span>Modern</span><strong>${userInfo.modernPoints || 0}</strong></div>
+          <div class="points-stat"><span>Sports</span><strong>${userInfo.sportsPoints || 0}</strong></div>
+          <div class="points-stat"><span>Philanthropy</span><strong>${userInfo.philanthropyPoints || 0}</strong></div>
+          <div class="points-stat"><span>Fundraising</span><strong>${userInfo.fundraisingPoints || 0}</strong></div>
         </div>
         <div class="points-qual-row">
           <div class="points-qual ${q.isangMahalQualified === 'Qualified' ? 'is-qualified' : ''}">
