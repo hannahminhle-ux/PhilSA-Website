@@ -1166,8 +1166,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 .winners-logo{
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
   margin: 0;
 }
