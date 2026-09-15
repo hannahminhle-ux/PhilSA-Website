@@ -337,11 +337,10 @@ a{ color: inherit; }
 }
 
 .hero-logo img{
-  width: 55%;
-  height: 55%;
-  object-fit: contain;
-  margin: auto;
-  border-radius: 0;
+  max-width: 160px;   
+  height: auto;
+  margin-left: auto;   
+  display: block;
 }
 
 .img-ph-icon{ opacity: 0.55; flex-shrink: 0; }
