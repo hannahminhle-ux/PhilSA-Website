@@ -334,6 +334,9 @@ a{ color: inherit; }
 .hero-logo{
   background: transparent;
   border: none;
+  max-width: 160px;
+  height: auto;
+  justify-self: end;
 }
 
 .hero-logo img{
