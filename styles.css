@@ -334,15 +334,11 @@ a{ color: inherit; }
 .hero-logo{
   background: transparent;
   border: none;
-  max-width: 160px;
-  height: auto;
-  justify-self: end;
 }
 
 .hero-logo img{
-  max-width: 160px;   
-  height: auto;
-  margin-left: auto;   
+  width: 55%;   
+  height: 55%;   
   display: block;
 }
 
@@ -736,6 +732,12 @@ a{ color: inherit; }
 
 .card-link {
   text-decoration: none;
+}
+
+.modern-hero-logo{
+  max-width: 160px;
+  height: auto;
+  justify-self: end;
 }
 
 
