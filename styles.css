@@ -503,6 +503,13 @@ a{ color: inherit; }
   margin: 56px auto;
  }
 
+.sports-action-shot{
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
 /* ---------------- Hero image marquee ---------------- */
 .hero-marquee{
   width: auto;
